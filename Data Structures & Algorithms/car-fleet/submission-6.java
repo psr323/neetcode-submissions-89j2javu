@@ -1,0 +1,50 @@
+class Solution {
+    public int carFleet(int target, int[] position, int[] speed) {
+        
+        Car[] cars = new Car[position.length];
+
+        for(int i = 0; i < position.length ; i++){
+            cars[i] = new Car(position[i], speed[i]);
+        }
+
+        Arrays.sort(cars, (a,b) -> b.pos - a.pos);
+
+        // cars = reverse(cars);
+
+        Stack<Float> stack = new Stack<>();
+
+        for(Car car : cars){
+            Float t = (float)(target - car.pos)/(car.speed * 1f);
+            System.out.println("Pos = " + car.pos + " Speed = " + car.speed + " Time = " + t);
+            if(stack.isEmpty()){
+                stack.push(t);
+            } else if(t > stack.peek()){
+                stack.push(t);
+            }
+        }
+
+        return stack.size();
+    }
+
+    public Car[] reverse(Car[] validData) {
+        for(int i = 0; i < validData.length / 2; i++)
+{
+    Car temp = validData[i];
+    validData[i] = validData[validData.length - i - 1];
+    validData[validData.length - i - 1] = temp;
+}
+
+return validData;
+    
+}
+}
+
+class Car {
+    private int pos;
+    private int speed;
+
+    Car(int pos, int speed){
+        this.pos = pos;
+        this.speed = speed;
+    }
+}
